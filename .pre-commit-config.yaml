@@ -1,31 +1,66 @@
 repos:
+  # Hygiene / safety
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
-      - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-case-conflict
+      - id: forbid-new-submodules
+      - id: check-json
+      - id: check-yaml
 
+  # JSON formatting (exclude package.json anywhere)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: pretty-format-json
+        name: pretty-format-json (configs)
+        args: ["--autofix", "--indent=2"]
+        files: ^(?!.*(?:^|/)package\.json$).*\.json$
+
+  # Frontend tools
   - repo: local
     hooks:
       - id: eslint
         name: eslint (fix)
         language: system
-        entry: pnpm exec eslint --fix
+        entry: pnpm exec eslint --fix --max-warnings=0
         files: ^src/.*\.(ts|tsx|js|jsx)$
-
       - id: prettier
         name: prettier (write)
         language: system
         entry: pnpm exec prettier --write
-        files: ^(src/.*\.(ts|tsx|js|jsx|css|scss)|.*\.(md|json|ya?ml))$
+        files: ^(src/.*\.(ts|tsx|js|jsx|css|scss)|.*\.(md|ya?ml))$
+      - id: sort-package-json
+        name: sort-package-json
+        language: system
+        entry: pnpm exec sort-package-json
+        files: ^(?:.*/)?package\.json$
 
+  # Push-only heavier gates
+  - repo: local
+    hooks:
       - id: typecheck
         name: typescript typecheck
         language: system
         entry: pnpm exec tsc -p tsconfig.app.json --noEmit
         pass_filenames: false
+        stages: [pre-push]
+  - repo: local
+    hooks:
+      - id: test-ci
+        name: vitest (ci)
+        language: system
+        entry: pnpm run test:ci
+        pass_filenames: false
+        stages: [pre-push]
 
+  # Commit message lint
   - repo: local
     hooks:
       - id: commitlint
