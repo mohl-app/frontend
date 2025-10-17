@@ -8,12 +8,14 @@
     "build": "tsc -p tsconfig.app.json && vite build",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
+    "hooks:install": "uvx pre-commit install && uvx pre-commit install --hook-type pre-push && uvx pre-commit install --hook-type commit-msg",
+    "hooks:all": "uvx pre-commit run --all-files",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "prepare": "husky",
     "preview": "vite preview",
     "test": "vitest",
     "test:ci": "vitest run --reporter=dot --coverage",
-    "typecheck": "tsc -p tsconfig.app.json --noEmit"
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "commitlint": "commitlint --edit"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

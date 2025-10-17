@@ -1,5 +1,4 @@
 name: frontend-ci
-
 on:
   push:
     branches: [main]
@@ -11,7 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # PNPM + Node (caches pnpm store automatically)
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -20,15 +18,14 @@ jobs:
           node-version: "22"
           cache: "pnpm"
 
-      # Approve native builds BEFORE install
       - name: Approve native builds (SWC, esbuild)
         run: pnpm approve-builds @swc/core esbuild
 
       - name: Install deps (frozen)
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm run lint
+      - name: Pre-commit (all files)
+        run: uvx pre-commit run --all-files
 
       - name: Test
         run: pnpm run test:ci
