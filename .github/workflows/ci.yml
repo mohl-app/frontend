@@ -17,8 +17,8 @@ jobs:
           version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: "22"
+          cache: "pnpm"
 
       # Approve native builds BEFORE install
       - name: Approve native builds (SWC, esbuild)
