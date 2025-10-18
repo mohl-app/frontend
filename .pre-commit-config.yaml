@@ -80,7 +80,7 @@ repos:
       - id: commitlint
         name: commitlint (conventional)
         language: system
-        entry: pnpm commitlint --edit
+        entry: pnpm run commitlint
         stages: [commit-msg]
 
 exclude: ^(node_modules|dist|coverage)/
