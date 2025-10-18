@@ -1,0 +1,86 @@
+repos:
+  # Hygiene / safety  → run on commit only
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        stages: [pre-commit]
+      - id: trailing-whitespace
+        stages: [pre-commit]
+      - id: check-merge-conflict
+        stages: [pre-commit]
+      - id: detect-private-key
+        stages: [pre-commit]
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+        stages: [pre-commit]
+      - id: check-case-conflict
+        stages: [pre-commit]
+      - id: forbid-new-submodules
+        stages: [pre-commit]
+      - id: check-json
+        stages: [pre-commit]
+      - id: check-yaml
+        stages: [pre-commit]
+
+  # JSON formatting (except package files)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: pretty-format-json
+        name: pretty-format-json (configs)
+        args: ["--autofix", "--indent=2"]
+        files: ^(?!.*(?:^|/)package\.json$).*\.json$
+        stages: [pre-commit]
+
+  # Frontend tools → commit only
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint (fix)
+        language: system
+        entry: pnpm exec eslint --fix --max-warnings=0
+        files: ^src/.*\.(ts|tsx|js|jsx)$
+        stages: [pre-commit]
+      - id: prettier
+        name: prettier (write)
+        language: system
+        entry: pnpm exec prettier --write
+        files: ^(src/.*\.(ts|tsx|js|jsx|css|scss)|.*\.(md|ya?ml))$
+        stages: [pre-commit]
+      - id: sort-package-json
+        name: sort-package-json
+        language: system
+        entry: pnpm exec sort-package-json
+        files: ^(?:.*/)?package\.json$
+        stages: [pre-commit]
+
+  # Push-only heavier gates
+  - repo: local
+    hooks:
+      - id: typecheck
+        name: typescript typecheck
+        language: system
+        entry: pnpm exec tsc -p tsconfig.app.json --noEmit
+        pass_filenames: false
+        stages: [pre-push]
+
+  - repo: local
+    hooks:
+      - id: test-ci
+        name: vitest (ci)
+        language: system
+        entry: pnpm run test:ci
+        pass_filenames: false
+        stages: [pre-push]
+
+  # Commit messages
+  - repo: local
+    hooks:
+      - id: commitlint
+        name: commitlint (conventional)
+        language: system
+        entry: pnpm run commitlint
+        stages: [commit-msg]
+
+exclude: ^(node_modules|dist|coverage)/

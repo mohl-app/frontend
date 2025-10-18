@@ -1,0 +1,62 @@
+name: frontend-ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            ~/.cache/pre-commit
+          key: ${{ runner.os }}-precommit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-precommit-
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      # Install uv and export to PATH
+      - name: Install uv (Astral)
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Approve native builds (SWC, esbuild)
+        run: pnpm approve-builds @swc/core esbuild
+
+      - name: Install deps (frozen)
+        run: pnpm install --frozen-lockfile
+
+      # Run all pre-commit hooks (uses uvx)
+      - name: Pre-commit (all files)
+        run: uvx pre-commit run --all-files
+
+      - name: Test
+        run: pnpm run test:ci
+
+      - name: Upload coverage
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+
+      - name: Build
+        run: pnpm run build
