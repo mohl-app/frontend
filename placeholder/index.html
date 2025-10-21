@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Matthew Grayson — Coming Soon</title>
+    <meta name="description" content="Portfolio launching soon. Links to GitHub, LinkedIn, and resume." />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Matthew Grayson — Portfolio" />
+    <meta property="og:description" content="Portfolio launching soon. Connect via GitHub and LinkedIn, or view the resume." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/logo.svg" />
+    <link rel="icon" href="./assets/logo.svg" />
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --fg: #e6e9ef;
+            --muted: #98a2b3;
+            --card: #0f1525;
+            --accent: #7dd3fc;
+            --accent-2: #a78bfa;
+        }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        html { background-color: #0f1525; }
+        body {
+            margin: 0;
+            color: var(--fg);
+            background: radial-gradient(1200px 800px at 20% 0%, #111827 0%, rgba(17,24,39,0) 60%),
+            radial-gradient(900px 600px at 100% 100%, #0f172a 0%, rgba(15,23,42,0) 60%),
+            linear-gradient(180deg, var(--bg), #0a0e17 70%);
+            font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            display: grid;
+            place-items: center;
+        }
+        .wrap {
+            width: min(980px, 92vw);
+            text-align: center;
+            padding: 48px 20px;
+        }
+        .card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+        .logo {
+            width: 112px; height: 112px; display: inline-block; border-radius: 16px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: radial-gradient(80px 80px at 30% 30%, rgba(255,255,255,0.12), transparent),
+            linear-gradient(135deg, rgba(125,211,252,0.18), rgba(167,139,250,0.18));
+        }
+        h1 { font-size: clamp(28px, 5vw, 48px); margin: 18px 0 8px; letter-spacing: -0.02em; }
+        .tagline { color: var(--muted); margin: 0 0 24px; }
+        .pill {
+            display: inline-flex; gap: 8px; align-items: center;
+            background: rgba(125,211,252,0.1);
+            border: 1px solid rgba(125,211,252,0.25);
+            color: var(--fg);
+            padding: 6px 12px; border-radius: 999px; font-size: 13px;
+        }
+        .links { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 24px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 16px; border-radius: 14px; text-decoration: none; color: var(--fg);
+            border: 1px solid rgba(255,255,255,0.08);
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+            transition: transform .08s ease, border-color .2s ease, background .2s ease;
+        }
+        .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.20); }
+        .btn svg { width: 18px; height: 18px; }
+        .resume { border-color: rgba(167,139,250,0.35); background: linear-gradient(180deg, rgba(167,139,250,0.2), rgba(167,139,250,0.06)); }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+        .grid > div { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 16px; text-align: left; }
+        .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+        .footer { margin-top: 26px; color: var(--muted); font-size: 13px; }
+        .hidden { position: absolute; left: -9999px; }
+        @media (min-width: 720px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        /* subtle animated accent ring */
+        .ring {
+            position: absolute; inset: auto 0 0 0; height: 280px; pointer-events: none; filter: blur(50px); opacity: .35;
+            background: radial-gradient(closest-side, var(--accent), transparent 60%), radial-gradient(closest-side, var(--accent-2), transparent 60%);
+            mix-blend-mode: screen;
+            animation: float 12s ease-in-out infinite alternate;
+        }
+        @keyframes float { from { transform: translateY(0px); } to { transform: translateY(-16px); } }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card" role="region" aria-label="Coming soon">
+        <div class="logo" aria-hidden="true">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="g" x1="0" x2="1" y1="1" y2="0">
+                        <stop offset="0" stop-color="#7dd3fc"/>
+                        <stop offset="1" stop-color="#a78bfa"/>
+                    </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="100" height="100" rx="18" fill="url(#g)" opacity="0.25"/>
+                <image href="./assets/logo.svg" x="0" y="0" width="100" height="100" />            </svg>
+        </div>
+        <h1>Portfolio</h1>
+        <p class="tagline">Building a faster, stricter, more observable stack.</p>
+        <span class="pill" aria-label="ETA">v1 launches Q4 2025</span>
+
+        <div class="links" aria-label="Primary links">
+            <a class="btn" href="https://github.com/Matthew-Grayson" target="_blank" rel="noopener" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.78-1.34-1.78-1.1-.75.08-.74.08-.74 1.22.09 1.86 1.25 1.86 1.25 1.08 1.85 2.84 1.32 3.53 1.01.11-.79.42-1.32.77-1.63-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.51.12-3.16 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.86.12 3.16.77.84 1.23 1.9 1.23 3.22 0 4.62-2.8 5.65-5.48 5.95.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+                <span>GitHub</span>
+            </a>
+            <a class="btn" href="https://www.linkedin.com/in/matthewagrayson/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5Zm.02 6.5H2V22h3V10Zm5 0H7v12h3v-6.5c0-3.59 4-3.88 4 0V22h3v-7.5c0-6.17-6.5-5.94-7  -2.9V10Z"/></svg>
+                <span>LinkedIn</span>
+            </a>
+            <a class="btn resume" href="/assets/resume.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm1 7h5v11H6V4h8v5Zm-7 4h8v2H8v-2Z"/></svg>
+                <span>Resume</span>
+            </a>
+            <a class="btn" href="mailto:matthew@mohl.app" aria-label="Email">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
+                <span>Email</span>
+            </a>
+        </div>
+
+        <div class="grid" aria-label="Meta">
+            <div>
+                <div class="label">Focus</div>
+                <div>Python · FastAPI · Django · React · AWS · IaC</div>
+            </div>
+            <div>
+                <div class="label">Status</div>
+                <div>Portfolio v1 in build. Case studies in review.</div>
+            </div>
+            <div>
+                <div class="label">Newsletter</div>
+                <form id="sub" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <label class="hidden" for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com" required
+                           style="width:100%;margin:8px 0 10px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--fg);" />
+                    <button type="submit" class="btn" style="width:100%;justify-content:center">Notify Me</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="footer">© <span id="y"></span> Matthew Grayson</p>
+    </div>
+    <div class="ring" aria-hidden="true"></div>
+</div>
+<script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
